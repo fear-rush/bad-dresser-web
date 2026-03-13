@@ -7,9 +7,24 @@ import { QuizCard } from "@/components/quiz-card";
 import { CollectionsCard } from "@/components/collections-card";
 import { DesktopLayout } from "@/components/desktop-layout";
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Bad Dresser",
+  url: "https://bad-dresser-web.vercel.app",
+  logo: "https://bad-dresser-web.vercel.app/images/logo.png",
+  description:
+    "A fashion label for the intellectually curious and sartorially rebellious.",
+  sameAs: [],
+};
+
 export default function Home() {
   return (
     <main className="relative w-full min-h-screen overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Background — GPU-composited to prevent scroll jitter on mobile Chrome */}
       <div
         className="fixed inset-0 z-0"
