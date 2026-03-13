@@ -10,8 +10,11 @@ import { DesktopLayout } from "@/components/desktop-layout";
 export default function Home() {
   return (
     <main className="relative w-full min-h-screen overflow-hidden">
-      {/* Background */}
-      <div className="fixed inset-0 z-0">
+      {/* Background — GPU-composited to prevent scroll jitter on mobile Chrome */}
+      <div
+        className="fixed inset-0 z-0"
+        style={{ transform: "translateZ(0)", willChange: "transform", backfaceVisibility: "hidden" }}
+      >
         <Image
           src="/images/main-bg.jpg"
           alt="Bad Dresser background"

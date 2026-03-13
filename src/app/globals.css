@@ -10,10 +10,15 @@
   --color-accent: #c4f82a;
 }
 
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
 body {
   background: var(--color-bg);
   color: #ffffff;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 /* Prevent native browser image dragging so card drag works smoothly */
