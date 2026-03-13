@@ -49,14 +49,8 @@ export default function Home() {
           {/* Feature card first on mobile */}
           <FeatureCard mobile />
 
-          {/* 2-column grid */}
+          {/* 2-column grid matching Pencil design layout */}
           <div className="grid grid-cols-2 gap-5">
-            <QuizCard mobile />
-            <MobileThumb
-              src="/images/collage-1.jpg"
-              label="Logo"
-              alt="Bad Dresser brand"
-            />
             <MobileThumb
               src="/images/lookbook.jpg"
               label="Lookbook"
@@ -66,6 +60,12 @@ export default function Home() {
               src="/images/collage-2.jpg"
               label="Collections"
               alt="Bad Dresser collections"
+            />
+            <QuizCard mobile />
+            <MobileThumb
+              src="/images/collage-1.jpg"
+              label="Journal"
+              alt="Bad Dresser journal"
             />
           </div>
         </div>
