@@ -9,7 +9,7 @@ export function CardShell({
 }) {
   return (
     <div
-      className={`rounded-lg overflow-hidden bg-white/15 backdrop-blur-xl border border-white/[0.08] cursor-pointer group w-full h-full ${className}`}
+      className={`rounded-lg overflow-hidden bg-white/15 backdrop-blur-xl border border-white/[0.08] group w-full h-full relative ${className}`}
       style={style}
     >
       {children}

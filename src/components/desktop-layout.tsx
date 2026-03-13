@@ -36,10 +36,10 @@ function DraggableCard({
   }, []);
 
   return (
-    <Draggable nodeRef={nodeRef} handle=".drag-handle">
+    <Draggable nodeRef={nodeRef}>
       <div
         ref={nodeRef}
-        className="absolute"
+        className="absolute cursor-grab active:cursor-grabbing"
         style={{
           left: position.left,
           top: position.top,
