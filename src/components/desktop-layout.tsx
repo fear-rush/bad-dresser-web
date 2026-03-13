@@ -36,19 +36,19 @@ function DraggableCard({
   }, []);
 
   return (
-    <Draggable nodeRef={nodeRef}>
+    <Draggable nodeRef={nodeRef} onStart={bringToFront}>
       <div
         ref={nodeRef}
-        className="absolute cursor-grab active:cursor-grabbing"
+        className="absolute cursor-grab active:cursor-grabbing select-none"
         style={{
           left: position.left,
           top: position.top,
           width: position.width,
           height: position.height,
           zIndex: zRef.current,
-        }}
-        onMouseDown={bringToFront}
-        onTouchStart={bringToFront}
+          WebkitUserDrag: "none",
+        } as React.CSSProperties}
+        onDragStart={(e) => e.preventDefault()}
       >
         {children}
       </div>
