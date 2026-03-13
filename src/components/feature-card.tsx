@@ -42,7 +42,7 @@ export function FeatureCard({ mobile = false }: { mobile?: boolean }) {
   }
 
   return (
-    <CardShell style={{ left: '28.61%', top: '3.22%', width: '34.72%', height: '70.78%' }}>
+    <CardShell>
       <Image
         src="/images/feature.jpg"
         alt="Bad Dresser feature"
@@ -52,6 +52,8 @@ export function FeatureCard({ mobile = false }: { mobile?: boolean }) {
         priority
         quality={75}
       />
+      {/* Drag handle — transparent bar at top */}
+      <div className="drag-handle cursor-grab active:cursor-grabbing absolute inset-x-0 top-0 h-[30px] z-20" />
       {/* Greyhound stamp */}
       <div className="absolute bottom-32 right-6 w-[160px] h-[160px] rotate-12 opacity-90 z-20">
         <Image

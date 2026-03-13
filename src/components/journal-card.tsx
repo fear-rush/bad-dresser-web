@@ -1,4 +1,5 @@
 import { CardShell } from "./card-shell";
+import { DragHandle } from "./drag-handle";
 
 const items = [
   { cat: "New Drop", title: "'Overthink' Capsule Collection Now Live" },
@@ -8,13 +9,9 @@ const items = [
 
 export function JournalCard() {
   return (
-    <CardShell style={{ left: '6.25%', top: '18.89%', width: '18.40%', height: '28.89%' }}>
+    <CardShell>
       <div className="flex flex-col h-full">
-        <div className="flex justify-center py-2.5">
-          <span className="font-[family-name:var(--font-space-grotesk)] text-sm font-semibold text-white">
-            Journal
-          </span>
-        </div>
+        <DragHandle label="Journal" />
         {items.map((item) => (
           <div
             key={item.title}

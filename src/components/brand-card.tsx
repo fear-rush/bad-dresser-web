@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { CardShell } from "./card-shell";
+import { DragHandle } from "./drag-handle";
 
 export function BrandCard() {
   return (
-    <CardShell style={{ left: '2.36%', top: '3.22%', width: '22.92%', height: '13.78%' }}>
+    <CardShell>
       <Image
         src="/images/collage-1.jpg"
         alt="Brand pattern"
@@ -12,19 +13,20 @@ export function BrandCard() {
         sizes="23vw"
         quality={60}
       />
-      <div className="relative z-10 flex items-center gap-4 p-5 h-full">
-        <div className="relative w-[60px] h-[60px] shrink-0 rounded-lg overflow-hidden">
+      <DragHandle label="Bad Dresser" />
+      <div className="relative z-10 flex items-center gap-4 p-4">
+        <div className="relative w-[50px] h-[50px] shrink-0 rounded-lg overflow-hidden">
           <Image
             src="/images/logo.png"
             alt="Bad Dresser logo"
             fill
             className="object-contain"
-            sizes="60px"
+            sizes="50px"
             priority
           />
         </div>
         <div>
-          <h1 className="font-[family-name:var(--font-space-grotesk)] text-[26px] font-extrabold text-white leading-tight">
+          <h1 className="font-[family-name:var(--font-space-grotesk)] text-[20px] font-extrabold text-white leading-tight">
             Bad Dresser
           </h1>
           <p className="font-[family-name:var(--font-space-mono)] text-[10px] text-white/80 tracking-wide">

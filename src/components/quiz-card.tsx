@@ -23,7 +23,7 @@ export function QuizCard({ mobile = false }: { mobile?: boolean }) {
   }
 
   return (
-    <CardShell style={{ left: '73.33%', top: '38.89%', width: '25.35%', height: '58.89%' }}>
+    <CardShell>
       <Image
         src="/images/quiz.jpg"
         alt="Style quiz background"
@@ -32,8 +32,8 @@ export function QuizCard({ mobile = false }: { mobile?: boolean }) {
         sizes="25vw"
         quality={70}
       />
-      {/* Top label */}
-      <div className="absolute inset-x-0 top-0 flex justify-center py-2 bg-gradient-to-b from-black/60 to-transparent rounded-t-lg z-10">
+      {/* Top label — also drag handle */}
+      <div className="drag-handle cursor-grab active:cursor-grabbing absolute inset-x-0 top-0 flex justify-center py-2 bg-gradient-to-b from-black/60 to-transparent rounded-t-lg z-10 select-none">
         <span className="font-[family-name:var(--font-space-grotesk)] text-[13px] font-semibold text-white">
           Are you a bad dresser?
         </span>

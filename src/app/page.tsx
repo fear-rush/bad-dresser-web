@@ -5,6 +5,7 @@ import { FeatureCard } from "@/components/feature-card";
 import { LookbookCard } from "@/components/lookbook-card";
 import { QuizCard } from "@/components/quiz-card";
 import { CollectionsCard } from "@/components/collections-card";
+import { DesktopLayout } from "@/components/desktop-layout";
 
 export default function Home() {
   return (
@@ -23,14 +24,16 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/40" />
       </div>
 
-      {/* Desktop Layout — overlapping cards on single viewport */}
-      <div className="relative z-10 hidden md:block w-full h-screen p-5">
-        <BrandCard />
-        <JournalCard />
-        <FeatureCard />
-        <LookbookCard />
-        <QuizCard />
-        <CollectionsCard />
+      {/* Desktop Layout — draggable overlapping cards */}
+      <div className="relative z-10 hidden md:block w-full h-screen">
+        <DesktopLayout>
+          <BrandCard />
+          <JournalCard />
+          <FeatureCard />
+          <LookbookCard />
+          <QuizCard />
+          <CollectionsCard />
+        </DesktopLayout>
       </div>
 
       {/* Mobile Layout — scrollable grid */}

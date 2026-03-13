@@ -8,9 +8,9 @@ const collections = [
 
 export function CollectionsCard() {
   return (
-    <CardShell style={{ left: '2.36%', top: '61.11%', width: '31.25%', height: '36.67%' }}>
-      {/* Header */}
-      <div className="flex justify-center py-2.5 bg-white/5">
+    <CardShell>
+      {/* Header — also drag handle */}
+      <div className="drag-handle cursor-grab active:cursor-grabbing flex justify-center py-2.5 bg-white/5 select-none">
         <span className="font-[family-name:var(--font-space-grotesk)] text-[13px] font-semibold text-white">
           Current Collections
         </span>

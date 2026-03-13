@@ -3,7 +3,7 @@ import { CardShell } from "./card-shell";
 
 export function LookbookCard() {
   return (
-    <CardShell style={{ left: '58.75%', top: '2.22%', width: '27.78%', height: '54.11%' }}>
+    <CardShell>
       <Image
         src="/images/lookbook.jpg"
         alt="Bad Dresser lookbook"
@@ -12,8 +12,8 @@ export function LookbookCard() {
         sizes="28vw"
         quality={70}
       />
-      {/* Top label */}
-      <div className="absolute inset-x-0 top-0 flex justify-center py-2.5 bg-gradient-to-b from-black/60 to-transparent rounded-t-lg z-10">
+      {/* Top label — also drag handle */}
+      <div className="drag-handle cursor-grab active:cursor-grabbing absolute inset-x-0 top-0 flex justify-center py-2.5 bg-gradient-to-b from-black/60 to-transparent rounded-t-lg z-10 select-none">
         <span className="font-[family-name:var(--font-space-grotesk)] text-[13px] font-semibold text-white">
           Lookbook
         </span>
