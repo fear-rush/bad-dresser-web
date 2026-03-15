@@ -1,36 +1,177 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bad Dresser
+
+**Good education, bad dresser.**
+
+A fashion label website for the intellectually curious and sartorially rebellious. Built with Next.js, React, and Tailwind CSS, inspired by [motherlondon.com](https://www.motherlondon.com/)'s overlapping draggable card layout.
+
+Live: [bad-dresser-web.vercel.app](https://bad-dresser-web.vercel.app)
+
+## Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router, React 19, TypeScript)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Fonts**: Space Grotesk, Space Mono, Manrope (via `next/font`)
+- **Drag**: [react-draggable](https://github.com/react-grid-layout/react-draggable)
+- **Deployment**: [Vercel](https://vercel.com/)
+- **Design**: [Pencil.dev](https://pencil.dev/)
+
+## Features
+
+### Desktop
+
+- Overlapping glass-morphism cards with `backdrop-blur` and semi-transparent borders
+- Percentage-based positioning for consistent layout across screen resolutions
+- **Draggable cards** — click and drag any card to reposition it on the viewport (like macOS desktop icons)
+- **Dynamic z-index** — dragged card automatically layers on top of others (Photoshop-style layering)
+- Hover effect with subtle darkening overlay and pointer cursor
+
+### Mobile
+
+- Oversized cropped "Bad Dresser" brand typography (96px, clipped for dramatic effect)
+- Full-width feature card with greyhound stamp overlay
+- 2-column grid: Lookbook, Collections, Quiz, Journal
+- GPU-composited fixed background for smooth scrolling (no jitter on Chrome)
+- `overscroll-behavior-y: none` to prevent bounce artifacts
+
+### SEO & Social Sharing
+
+- Comprehensive metadata: title template, description, keywords, canonical URL
+- Open Graph tags (Facebook, WhatsApp, LinkedIn)
+- Twitter Card (`summary_large_image`)
+- Dynamic OG image generated via `ImageResponse` — branded card with gradient, accent, and tagline
+- JSON-LD structured data (`Organization` schema)
+- Auto-generated `sitemap.xml` and `robots.txt`
+- Favicon, `icon.png` (192x192), `apple-icon.png` (180x180) from Bad Dresser logo
+
+### Performance
+
+- `next/image` for automatic AVIF/WebP conversion and responsive `sizes`
+- `priority` on above-fold images, lazy loading for below-fold
+- `display: "swap"` on all fonts to prevent FOIT
+- GPU layer promotion (`transform: translateZ(0)`, `will-change: transform`) on fixed background
+- Native browser image drag prevention via CSS (`pointer-events: none`, `-webkit-user-drag: none`)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout, fonts, SEO metadata
+│   ├── page.tsx            # Homepage (desktop + mobile layouts)
+│   ├── globals.css         # Tailwind 4 theme tokens, global styles
+│   ├── opengraph-image.tsx # Dynamic OG image generator
+│   ├── twitter-image.tsx   # Twitter card (re-exports OG)
+│   ├── sitemap.ts          # Auto-generated sitemap
+│   ├── robots.ts           # Robots.txt config
+│   ├── favicon.ico         # 32x32 Bad Dresser logo
+│   ├── icon.png            # 192x192 (Android/PWA)
+│   └── apple-icon.png      # 180x180 (iOS)
+├── components/
+│   ├── card-shell.tsx      # Glass-morphism card wrapper with hover overlay
+│   ├── desktop-layout.tsx  # Draggable card system (react-draggable, z-index management)
+│   ├── drag-handle.tsx     # Visual title bar label
+│   ├── brand-card.tsx      # Logo + tagline card
+│   ├── journal-card.tsx    # News items card
+│   ├── feature-card.tsx    # "Welcome to Bad Dresser" with greyhound stamp
+│   ├── lookbook-card.tsx   # Lookbook with gradient overlays
+│   ├── quiz-card.tsx       # "How Bad a Dresser Are You?" quiz CTA
+│   └── collections-card.tsx # Two collection items side by side
+public/
+└── images/
+    ├── main-bg.jpg           # Full-page background
+    ├── feature.jpg           # Feature card photo
+    ├── lookbook.jpg          # Lookbook card photo
+    ├── quiz.jpg              # Quiz card photo
+    ├── collage-1.jpg         # Collections / brand card background
+    ├── collage-2.jpg         # Collections card
+    ├── collage-3.jpg         # Additional collage
+    ├── logo.png              # Bad Dresser logo
+    └── overlay-greyhound.png # "Greyhound Till I Die" stamp
+```
 
-## Learn More
+## Design Assets (Pencil.dev)
 
-To learn more about Next.js, take a look at the following resources:
+The original design was created in Pencil.dev. Source files and raw assets:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+/Users/maryln/Developer/bad-dresser/Bad Dresser Asset Page/
+├── Bad Dresser.pen           # Pencil design file (desktop + mobile frames)
+├── logo.png                  # Original logo (4500x4500)
+├── BG.png                    # Background asset
+├── bottom.png
+├── mkp.png
+├── wa.png
+├── web.png
+└── website-asset/            # Raw website image assets
+    ├── IMG_8210.JPG          # Feature photo (renamed to feature.jpg in web)
+    ├── main-bg.jpg           # Background photo
+    ├── collage-1.jpg
+    ├── collage-2.jpg
+    ├── collage-3.jpg
+    ├── logo.png
+    ├── overlay-greyhound.png
+    ├── gleb-khodiakov-3Y2ikkhwi30-unsplash.jpg  # Used for lookbook
+    └── ng-jun-xian-qf5l33GiG5Q-unsplash.jpg    # Used for quiz
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Pencil.dev Frame IDs
+
+| Frame | ID | Size |
+|-------|-----|------|
+| Desktop — "Bad Dresser Homepage" | `skTY0` | 1440 x 900 |
+| Mobile — "Bad Dresser Mobile" | `hQ6sJ` | 390 x 1050 |
+
+### Card Node IDs (Pencil.dev)
+
+| Card | Desktop ID |
+|------|-----------|
+| Brand | `xFbLZ` |
+| Feature | `iMeZH` |
+| Lookbook | `8hdtF` |
+| Quiz | `xBBjL` |
+| Collections | `10RbE` |
+| Journal | `qedWa` |
+| Greyhound stamp (desktop) | `6baZJ` |
+| Greyhound stamp (mobile) | `VuZ7n` |
+
+### Card Positions (Desktop — percentage of 1440x900)
+
+| Card | Left | Top | Width | Height |
+|------|------|-----|-------|--------|
+| Brand | 2.36% | 3.22% | 22.92% | 13.78% |
+| Journal | 6.25% | 18.89% | 18.40% | 28.89% |
+| Feature | 28.61% | 3.22% | 34.72% | 70.78% |
+| Lookbook | 58.75% | 2.22% | 27.78% | 54.11% |
+| Quiz | 73.33% | 38.89% | 25.35% | 58.89% |
+| Collections | 2.36% | 61.11% | 31.25% | 36.67% |
+
+## Design Inspiration
+
+Layout and interaction patterns inspired by [motherlondon.com](https://www.motherlondon.com/):
+
+- Single viewport with overlapping absolutely-positioned cards
+- Glass-morphism (`rgba(255,255,255,0.15)` + `backdrop-blur`)
+- `react-draggable` for drag-to-reposition behavior
+- Dynamic z-index layering on drag
+- Mobile: oversized cropped typography + grid thumbnails with pill labels
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Or connect the [GitHub repo](https://github.com/fear-rush/bad-dresser-web) to Vercel for automatic deployments on push.
+
+## License
+
+Private project.
