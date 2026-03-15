@@ -20,15 +20,19 @@ const jsonLd = {
 
 export default function Home() {
   return (
-    <main className="relative w-full min-h-screen overflow-hidden">
+    <main className="relative w-full min-h-[100svh] md:min-h-screen overflow-hidden">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Background — GPU-composited to prevent scroll jitter on mobile Chrome */}
+      {/* Desktop background stays fixed for the single-viewport draggable layout */}
       <div
-        className="fixed inset-0 z-0"
-        style={{ transform: "translateZ(0)", willChange: "transform", backfaceVisibility: "hidden" }}
+        className="fixed inset-0 z-0 hidden md:block pointer-events-none"
+        style={{
+          transform: "translateZ(0)",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+        }}
       >
         <Image
           src="/images/main-bg.jpg"
@@ -40,6 +44,22 @@ export default function Home() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/40" />
+      </div>
+
+      {/* Mobile background follows scroll container to avoid fixed-layer jitter */}
+      <div className="absolute inset-0 z-0 md:hidden pointer-events-none">
+        <div className="sticky top-0 h-[100svh] overflow-hidden">
+          <Image
+            src="/images/main-bg.jpg"
+            alt="Bad Dresser background"
+            fill
+            className="object-cover main-bg-mobile"
+            priority
+            quality={75}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
       </div>
 
       {/* Desktop Layout — draggable overlapping cards */}
@@ -55,7 +75,7 @@ export default function Home() {
       </div>
 
       {/* Mobile Layout — scrollable grid */}
-      <div className="relative z-10 md:hidden w-full min-h-screen">
+      <div className="relative z-10 md:hidden w-full min-h-[100svh]">
         {/* Oversized brand text — cropped overflow matching Pencil design */}
         <div className="overflow-hidden h-[75px] relative">
           <p

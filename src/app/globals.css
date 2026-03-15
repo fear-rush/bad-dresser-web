@@ -11,10 +11,13 @@
 }
 
 html {
+  height: 100%;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
 }
 
 body {
+  min-height: 100%;
   background: var(--color-bg);
   color: #ffffff;
   overflow-x: hidden;
@@ -26,4 +29,26 @@ img {
   -webkit-user-drag: none;
   user-select: none;
   pointer-events: none;
+}
+
+@keyframes bg-breathe {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.main-bg-mobile {
+  animation: bg-breathe 18s ease-in-out infinite alternate;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-bg-mobile {
+    animation: none;
+    transform: scale(1.06);
+  }
 }
