@@ -13,7 +13,8 @@ const cardPositions = [
   { left: "2.36%", top: "61.11%", width: "31.25%", height: "36.67%" }, // Collections
 ];
 
-let globalMaxZ = 10;
+// Keep this at or above the highest initial z-index so first drag always wins.
+let globalMaxZ = 10 + cardPositions.length - 1;
 
 function DraggableCard({
   children,
@@ -49,6 +50,8 @@ function DraggableCard({
           WebkitUserDrag: "none",
         } as React.CSSProperties}
         onDragStart={(e) => e.preventDefault()}
+        onMouseDown={bringToFront}
+        onTouchStart={bringToFront}
       >
         {children}
       </div>
