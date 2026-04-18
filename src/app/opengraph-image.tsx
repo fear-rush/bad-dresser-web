@@ -1,10 +1,17 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 export const alt = "Bad Dresser — Good Education, Bad Dresser";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OGImage() {
+  const logoData = await readFile(
+    join(process.cwd(), "public", "landing-page", "mobile-logo.png")
+  );
+  const logoSrc = `data:image/png;base64,${logoData.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -12,67 +19,17 @@ export default async function OGImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)",
-          gap: 20,
-          padding: 60,
+          background: "#000000",
         }}
       >
-        {/* Accent line */}
-        <div
-          style={{
-            width: 80,
-            height: 4,
-            background: "#C4F82A",
-            borderRadius: 2,
-          }}
+        <img
+          src={logoSrc}
+          width={320}
+          height={124}
+          style={{ objectFit: "contain" }}
         />
-        {/* Brand name */}
-        <div
-          style={{
-            fontSize: 80,
-            fontWeight: 800,
-            color: "white",
-            letterSpacing: -3,
-            lineHeight: 1,
-          }}
-        >
-          Bad Dresser
-        </div>
-        {/* Tagline */}
-        <div
-          style={{
-            fontSize: 28,
-            color: "rgba(255, 255, 255, 0.5)",
-            letterSpacing: 4,
-            textTransform: "uppercase",
-          }}
-        >
-          good education, bad dresser.
-        </div>
-        {/* Divider */}
-        <div
-          style={{
-            width: 40,
-            height: 1,
-            background: "rgba(255, 255, 255, 0.2)",
-            marginTop: 8,
-            marginBottom: 8,
-          }}
-        />
-        {/* Description */}
-        <div
-          style={{
-            fontSize: 22,
-            color: "rgba(255, 255, 255, 0.4)",
-            textAlign: "center",
-            maxWidth: 600,
-          }}
-        >
-          A fashion label for the intellectually curious and sartorially rebellious.
-        </div>
       </div>
     ),
     { ...size }

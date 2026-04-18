@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | Bad Dresser",
   },
   description:
-    "A fashion label for the intellectually curious and sartorially rebellious. Explore collections, lookbooks, and the anti-fashion statement.",
+    "A small study of culture, memory, and bad decisions in clothing.",
   keywords: [
     "Bad Dresser",
     "fashion label",
@@ -61,13 +61,13 @@ export const metadata: Metadata = {
     siteName: "Bad Dresser",
     title: "Bad Dresser — Good Education, Bad Dresser",
     description:
-      "A fashion label for the intellectually curious and sartorially rebellious.",
+      "A small study of culture, memory, and bad decisions in clothing.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Bad Dresser — Good Education, Bad Dresser",
     description:
-      "A fashion label for the intellectually curious and sartorially rebellious.",
+      "A small study of culture, memory, and bad decisions in clothing.",
   },
   alternates: {
     canonical: siteUrl,

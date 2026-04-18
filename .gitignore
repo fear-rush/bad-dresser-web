@@ -43,3 +43,7 @@ next-env.d.ts
 # playwright
 .playwright-mcp/
 /*.png
+
+# design source files
+/asset/
+*.pen
