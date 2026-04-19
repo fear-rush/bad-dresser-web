@@ -4,14 +4,14 @@
 
 A fashion label website for the intellectually curious and sartorially rebellious. Built with Next.js, React, and Tailwind CSS, inspired by [motherlondon.com](https://www.motherlondon.com/)'s overlapping draggable card layout.
 
-Live: [bad-dresser-web.vercel.app](https://bad-dresser-web.vercel.app)
+Live: [baddresser.com](https://baddresser.com)
 
 ## Tech Stack
 
 - **Framework**: [Next.js 16](https://nextjs.org/) (App Router, React 19, TypeScript)
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
 - **Fonts**: Space Grotesk, Space Mono, Manrope (via `next/font`)
-- **Drag**: [react-draggable](https://github.com/react-grid-layout/react-draggable)
+- **Drag**: Custom pointer-event drag interactions (no external drag library)
 - **Deployment**: [Vercel](https://vercel.com/)
 - **Design**: [Pencil.dev](https://pencil.dev/)
 
@@ -62,7 +62,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Project Structure
 
-```
+``` 
 src/
 ├── app/
 │   ├── layout.tsx          # Root layout, fonts, SEO metadata
@@ -70,32 +70,32 @@ src/
 │   ├── globals.css         # Tailwind 4 theme tokens, global styles
 │   ├── opengraph-image.tsx # Dynamic OG image generator
 │   ├── twitter-image.tsx   # Twitter card (re-exports OG)
+│   ├── artist/page.tsx     # Artist route (coming soon)
+│   ├── catalogue/page.tsx  # Catalogue route (coming soon)
 │   ├── sitemap.ts          # Auto-generated sitemap
 │   ├── robots.ts           # Robots.txt config
 │   ├── favicon.ico         # 32x32 Bad Dresser logo
 │   ├── icon.png            # 192x192 (Android/PWA)
 │   └── apple-icon.png      # 180x180 (iOS)
 ├── components/
-│   ├── card-shell.tsx      # Glass-morphism card wrapper with hover overlay
-│   ├── desktop-layout.tsx  # Draggable card system (react-draggable, z-index management)
-│   ├── drag-handle.tsx     # Visual title bar label
-│   ├── brand-card.tsx      # Logo + tagline card
-│   ├── journal-card.tsx    # News items card
-│   ├── feature-card.tsx    # "Welcome to Bad Dresser" with greyhound stamp
-│   ├── lookbook-card.tsx   # Lookbook with gradient overlays
-│   ├── quiz-card.tsx       # "How Bad a Dresser Are You?" quiz CTA
-│   └── collections-card.tsx # Two collection items side by side
+│   ├── landing-page/
+│   │   ├── landing-page-client.tsx # Main landing layouts + drag interactions
+│   │   ├── instagram-slider.tsx    # Instagram carousel card
+│   │   └── spotify-player.tsx      # Optional Spotify embed with fail-silent loader
+│   ├── coming-soon-page.tsx        # Shared placeholder page for non-home routes
+│   └── nav-links.tsx               # Internal/external nav links
+├── lib/
+│   ├── landing-page-assets.ts # Landing image asset map
+│   └── site.ts                # Centralized domain and SEO constants
 public/
-└── images/
-    ├── main-bg.jpg           # Full-page background
-    ├── feature.jpg           # Feature card photo
-    ├── lookbook.jpg          # Lookbook card photo
-    ├── quiz.jpg              # Quiz card photo
-    ├── collage-1.jpg         # Collections / brand card background
-    ├── collage-2.jpg         # Collections card
-    ├── collage-3.jpg         # Additional collage
-    ├── logo.png              # Bad Dresser logo
-    └── overlay-greyhound.png # "Greyhound Till I Die" stamp
+└── landing-page/
+    ├── background.webp
+    ├── about-card.webp
+    ├── new-drop-card.webp
+    ├── preview-card.webp
+    ├── mobile-logo.webp
+    ├── mobile-logo.png
+    └── instagram-slide-content/*.webp
 ```
 
 ## Design Assets (Pencil.dev)
@@ -160,7 +160,7 @@ Layout and interaction patterns inspired by [motherlondon.com](https://www.mothe
 
 - Single viewport with overlapping absolutely-positioned cards
 - Glass-morphism (`rgba(255,255,255,0.15)` + `backdrop-blur`)
-- `react-draggable` for drag-to-reposition behavior
+- Custom pointer-event drag-to-reposition behavior
 - Dynamic z-index layering on drag
 - Mobile: oversized cropped typography + grid thumbnails with pill labels
 

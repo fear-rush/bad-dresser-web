@@ -1,9 +1,13 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
+
+export const dynamic = "force-static";
+export const revalidate = 86400;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://bad-dresser-web.vercel.app",
+      url: SITE_URL,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,

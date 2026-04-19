@@ -1,4 +1,8 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
+
+export const dynamic = "force-static";
+export const revalidate = 86400;
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,6 +10,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://bad-dresser-web.vercel.app/sitemap.xml",
+    host: SITE_URL,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

@@ -26,6 +26,7 @@ export default async function OGImage() {
       >
         <img
           src={logoSrc}
+          alt=""
           width={320}
           height={124}
           style={{ objectFit: "contain" }}

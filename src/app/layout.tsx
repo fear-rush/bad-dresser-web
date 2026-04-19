@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Space_Mono, Manrope } from "next/font/google";
+import {
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -21,28 +27,18 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const siteUrl = "https://bad-dresser-web.vercel.app";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
   title: {
-    default: "Bad Dresser — Good Education, Bad Dresser",
-    template: "%s | Bad Dresser",
+    default: `${SITE_NAME} — Good Education, Bad Dresser`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "A small study of culture, memory, and bad decisions in clothing.",
-  keywords: [
-    "Bad Dresser",
-    "fashion label",
-    "anti-fashion",
-    "streetwear",
-    "capsule collection",
-    "lookbook",
-    "good education bad dresser",
-  ],
-  authors: [{ name: "Bad Dresser" }],
-  creator: "Bad Dresser",
-  publisher: "Bad Dresser",
+  description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   robots: {
     index: true,
     follow: true,
@@ -57,20 +53,27 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteUrl,
-    siteName: "Bad Dresser",
-    title: "Bad Dresser — Good Education, Bad Dresser",
-    description:
-      "A small study of culture, memory, and bad decisions in clothing.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Good Education, Bad Dresser`,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} logo`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bad Dresser — Good Education, Bad Dresser",
-    description:
-      "A small study of culture, memory, and bad decisions in clothing.",
+    title: `${SITE_NAME} — Good Education, Bad Dresser`,
+    description: SITE_DESCRIPTION,
+    images: [`${SITE_URL}/twitter-image`],
   },
   alternates: {
-    canonical: siteUrl,
+    canonical: "/",
   },
 };
 
@@ -88,6 +91,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://open.spotify.com" />
+        <link rel="dns-prefetch" href="https://open.spotify.com" />
+        <link
+          rel="preconnect"
+          href="https://i.scdn.co"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://i.scdn.co" />
+      </head>
       <body
         className={`${spaceGrotesk.variable} ${spaceMono.variable} ${manrope.variable} antialiased`}
       >

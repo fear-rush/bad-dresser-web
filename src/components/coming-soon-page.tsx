@@ -25,7 +25,7 @@ export function ComingSoonPage({ currentPath }: { currentPath: string }) {
           className="object-cover"
           priority
           quality={82}
-          sizes="100vw"
+          sizes="(min-width: 768px) 100vw, 0px"
         />
         <div className="absolute inset-0 bg-black/40" />
 
@@ -50,7 +50,7 @@ export function ComingSoonPage({ currentPath }: { currentPath: string }) {
             className="object-cover"
             priority
             quality={78}
-            sizes="100vw"
+            sizes="(max-width: 767px) 100vw, 0px"
           />
         </div>
         <div className="absolute inset-0 bg-black/40" />

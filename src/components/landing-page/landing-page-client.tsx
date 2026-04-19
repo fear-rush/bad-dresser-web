@@ -1,12 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { LANDING_PAGE_ASSETS } from "@/lib/landing-page-assets";
 import { NavLinks, getNavItems } from "@/components/nav-links";
 import { InstagramSlider } from "./instagram-slider";
 
 const navItems = getNavItems("/");
+const SpotifyPlayer = dynamic(
+  () => import("./spotify-player").then((mod) => mod.SpotifyPlayer),
+  { ssr: false }
+);
 
 let globalMaxZ = 10;
 
@@ -80,16 +85,35 @@ function DraggableCard({
 
 export function LandingPageClient() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isDesktopViewport, setIsDesktopViewport] = useState<boolean | null>(
+    null
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const syncViewport = () => setIsDesktopViewport(mediaQuery.matches);
+
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
+
+    return () => mediaQuery.removeEventListener("change", syncViewport);
+  }, []);
 
   return (
     <>
-      <DesktopLanding />
-      <MobileLanding menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((open) => !open)} />
+      <DesktopLanding enableSpotify={isDesktopViewport === true} />
+      <MobileLanding
+        menuOpen={menuOpen}
+        onToggleMenu={() => setMenuOpen((open) => !open)}
+        enableSpotify={isDesktopViewport === false}
+      />
     </>
   );
 }
 
-function DesktopLanding() {
+function DesktopLanding({ enableSpotify }: { enableSpotify: boolean }) {
+  const [spotifyVisible, setSpotifyVisible] = useState(true);
+
   return (
     <section className="relative hidden h-screen w-full overflow-hidden md:block">
       <Image
@@ -99,7 +123,7 @@ function DesktopLanding() {
         className="object-cover"
         priority
         quality={82}
-        sizes="100vw"
+        sizes="(min-width: 768px) 100vw, 0px"
       />
 
       <div className="absolute inset-0 bg-black/15" />
@@ -143,9 +167,15 @@ function DesktopLanding() {
         />
       </DraggableCard>
 
-      <DraggableCard className="absolute left-[42.66%] top-[82.31%] h-[12.5%] w-[21.09%]">
-        <SpotifyPlayer className="h-full w-full" draggable />
-      </DraggableCard>
+      {enableSpotify && spotifyVisible && (
+        <DraggableCard className="absolute left-[42.66%] top-[82.31%] h-[12.5%] w-[21.09%]">
+          <SpotifyPlayer
+            className="h-full w-full"
+            draggable
+            onUnavailable={() => setSpotifyVisible(false)}
+          />
+        </DraggableCard>
+      )}
 
       <DraggableCard className="absolute left-[75.26%] top-[31.67%] h-[55.83%] w-[21.09%]">
         <CardImage
@@ -162,10 +192,14 @@ function DesktopLanding() {
 function MobileLanding({
   menuOpen,
   onToggleMenu,
+  enableSpotify,
 }: {
   menuOpen: boolean;
   onToggleMenu: () => void;
+  enableSpotify: boolean;
 }) {
+  const [spotifyVisible, setSpotifyVisible] = useState(true);
+
   return (
     <section className="relative min-h-[100dvh] md:hidden">
       {/* Background — clipped separately so sticky works */}
@@ -177,7 +211,7 @@ function MobileLanding({
           className="object-cover main-bg-mobile"
           priority
           quality={78}
-          sizes="100vw"
+          sizes="(max-width: 767px) 100vw, 0px"
         />
       </div>
       <div className="absolute inset-0 bg-black/28" />
@@ -273,53 +307,15 @@ function MobileLanding({
             sizes="(max-width: 768px) calc(100vw - 32px), 358px"
           />
 
-          <SpotifyPlayer className="relative h-[120px] w-full" />
+          {enableSpotify && spotifyVisible && (
+            <SpotifyPlayer
+              className="relative h-[120px] w-full"
+              onUnavailable={() => setSpotifyVisible(false)}
+            />
+          )}
         </div>
       </div>
     </section>
-  );
-}
-
-const SPOTIFY_PLAYLIST_ID = "5DSYXOzFnD5AK9tW69lEFy";
-
-function SpotifyPlayer({
-  className,
-  draggable,
-}: {
-  className: string;
-  draggable?: boolean;
-}) {
-  const [overlayActive, setOverlayActive] = useState(true);
-  const pointerStart = useRef({ x: 0, y: 0 });
-
-  return (
-    <div
-      className={`${className} relative`}
-      onPointerLeave={draggable ? () => setOverlayActive(true) : undefined}
-    >
-      <iframe
-        src={`https://open.spotify.com/embed/playlist/${SPOTIFY_PLAYLIST_ID}?utm_source=generator&theme=0`}
-        width="100%"
-        height="100%"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        title="Bad Dresser — Diamond Dogs playlist"
-        className="border-0"
-      />
-      {draggable && overlayActive && (
-        <div
-          className="absolute inset-0 z-10 cursor-grab active:cursor-grabbing"
-          onPointerDown={(e) => {
-            pointerStart.current = { x: e.clientX, y: e.clientY };
-          }}
-          onPointerUp={(e) => {
-            const dx = Math.abs(e.clientX - pointerStart.current.x);
-            const dy = Math.abs(e.clientY - pointerStart.current.y);
-            if (dx < 5 && dy < 5) setOverlayActive(false);
-          }}
-        />
-      )}
-    </div>
   );
 }
 

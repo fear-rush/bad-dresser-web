@@ -46,6 +46,7 @@ export function NavLinks({
           <Link
             key={item.label}
             href={item.href}
+            prefetch
             className={linkClassName}
             onClick={onClick}
           >
