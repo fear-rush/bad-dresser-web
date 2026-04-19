@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LANDING_PAGE_ASSETS } from "@/lib/landing-page-assets";
 import { NavLinks, getNavItems } from "@/components/nav-links";
@@ -158,13 +159,20 @@ function DesktopLanding({ enableSpotify }: { enableSpotify: boolean }) {
       </DraggableCard>
 
       <DraggableCard className="absolute left-[36.41%] top-[9.26%] h-[68.89%] w-[33.80%]">
-        <CardImage
-          src={LANDING_PAGE_ASSETS.newDropCard}
-          alt="New drop card"
-          className="card-shine h-full w-full overflow-hidden rounded-[23px]"
-          sizes="34vw"
-          priority
-        />
+        <Link
+          href="/catalogue/diamond-dogs"
+          prefetch
+          aria-label="Open Diamond Dogs catalogue"
+          className="block h-full w-full cursor-pointer"
+        >
+          <CardImage
+            src={LANDING_PAGE_ASSETS.newDropCard}
+            alt="New drop card"
+            className="card-shine h-full w-full overflow-hidden rounded-[23px]"
+            sizes="34vw"
+            priority
+          />
+        </Link>
       </DraggableCard>
 
       {enableSpotify && spotifyVisible && (
@@ -280,6 +288,8 @@ function MobileLanding({
             className="relative h-[411px] w-full overflow-hidden rounded-2xl"
             sizes="(max-width: 768px) calc(100vw - 32px), 358px"
             priority
+            href="/catalogue/diamond-dogs"
+            linkAriaLabel="Open Diamond Dogs catalogue"
           />
 
           <InstagramSlider
@@ -325,14 +335,18 @@ function CardImage({
   className,
   sizes,
   priority,
+  href,
+  linkAriaLabel,
 }: {
   src: string;
   alt: string;
   className: string;
   sizes: string;
   priority?: boolean;
+  href?: string;
+  linkAriaLabel?: string;
 }) {
-  return (
+  const image = (
     <div className={className}>
       <Image
         src={src}
@@ -344,5 +358,18 @@ function CardImage({
         priority={priority}
       />
     </div>
+  );
+
+  if (!href) return image;
+
+  return (
+    <Link
+      href={href}
+      prefetch
+      aria-label={linkAriaLabel ?? alt}
+      className="block cursor-pointer"
+    >
+      {image}
+    </Link>
   );
 }
