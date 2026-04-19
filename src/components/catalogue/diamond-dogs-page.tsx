@@ -372,7 +372,7 @@ function MobileCatalogue({
       <div className="relative z-10 mx-auto w-full max-w-[390px] pt-14">
         <div className="pointer-events-none absolute inset-0 bg-black/22" />
 
-        <div className="relative z-20 flex flex-col gap-4 px-4 pb-4 pt-4">
+        <div className="relative z-20 flex flex-col gap-4 px-6 pb-5 pt-5">
           <div className="relative h-[478px] w-full overflow-hidden rounded-2xl bg-black">
             <div
               className="relative h-[430px] overflow-hidden"
@@ -420,7 +420,7 @@ function MobileCatalogue({
                       alt={`${DIAMOND_DOGS_CATALOGUE.name} showcase mobile`}
                       fill
                       className="object-cover transition-transform duration-200"
-                      sizes="(max-width: 768px) calc(100vw - 32px), 358px"
+                      sizes="(max-width: 768px) calc(100vw - 48px), 342px"
                       quality={78}
                       priority={src === DIAMOND_DOGS_CATALOGUE.slides[0]}
                       style={{
