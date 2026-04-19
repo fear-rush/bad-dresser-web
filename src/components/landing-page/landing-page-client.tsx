@@ -31,12 +31,16 @@ function DraggableCard({
     startY: 0,
     prevX: 0,
     prevY: 0,
+    suppressClickUntil: 0,
   });
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
-    if ((e.target as HTMLElement).closest("button, a")) return;
+    if ((e.target as HTMLElement).closest("button")) return;
     globalMaxZ++;
-    if (cardRef.current) cardRef.current.style.zIndex = String(globalMaxZ);
+    if (cardRef.current) {
+      cardRef.current.style.zIndex = String(globalMaxZ);
+      cardRef.current.style.transition = "transform 80ms ease-out";
+    }
     const d = drag.current;
     d.active = true;
     d.dragging = false;
@@ -56,27 +60,74 @@ function DraggableCard({
     }
     const x = d.prevX + moveX;
     const y = d.prevY + moveY;
-    if (cardRef.current)
-      cardRef.current.style.transform = `translate(${x}px, ${y}px)`;
+    const baseRotation = Math.max(-2.2, Math.min(2.2, moveX * 0.03));
+    const wobbleStrength = Math.min(0.8, Math.hypot(moveX, moveY) / 120);
+    const wobbleRotation =
+      Math.sin(performance.now() / 95) * 0.7 * wobbleStrength;
+    const rotation = baseRotation + wobbleRotation;
+
+    if (cardRef.current) {
+      cardRef.current.style.transition = "none";
+      cardRef.current.style.transform = `translate(${x}px, ${y}px) rotate(${rotation.toFixed(
+        2
+      )}deg)`;
+    }
   }, []);
 
   const onPointerUp = useCallback((e: React.PointerEvent) => {
     const d = drag.current;
-    if (d.dragging) {
+    const wasDragging = d.dragging;
+
+    if (wasDragging) {
       d.prevX += e.clientX - d.startX;
       d.prevY += e.clientY - d.startY;
+      d.suppressClickUntil = performance.now() + 250;
     }
     d.active = false;
     d.dragging = false;
+
+    if (cardRef.current) {
+      cardRef.current.style.transition =
+        "transform 190ms cubic-bezier(0.22, 1, 0.36, 1)";
+      cardRef.current.style.transform = `translate(${d.prevX}px, ${d.prevY}px) rotate(0deg)`;
+    }
   }, []);
+
+  const onPointerCancel = useCallback(() => {
+    const d = drag.current;
+    d.active = false;
+    d.dragging = false;
+    if (cardRef.current) {
+      cardRef.current.style.transition =
+        "transform 190ms cubic-bezier(0.22, 1, 0.36, 1)";
+      cardRef.current.style.transform = `translate(${d.prevX}px, ${d.prevY}px) rotate(0deg)`;
+    }
+  }, []);
+
+  const onClickCapture = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (performance.now() < drag.current.suppressClickUntil) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, []);
+
+  const onDragStartCapture = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+    },
+    []
+  );
 
   return (
     <div
       ref={cardRef}
-      className={`${className} cursor-grab select-none active:cursor-grabbing`}
+      className={`${className} cursor-grab select-none will-change-transform active:cursor-grabbing`}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
+      onPointerCancel={onPointerCancel}
+      onClickCapture={onClickCapture}
+      onDragStartCapture={onDragStartCapture}
       style={{ zIndex: 10 }}
     >
       {children}
@@ -356,6 +407,7 @@ function CardImage({
         sizes={sizes}
         quality={80}
         priority={priority}
+        draggable={false}
       />
     </div>
   );
@@ -366,6 +418,7 @@ function CardImage({
     <Link
       href={href}
       prefetch
+      draggable={false}
       aria-label={linkAriaLabel ?? alt}
       className="block cursor-pointer"
     >
