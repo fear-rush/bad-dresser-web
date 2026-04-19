@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Space_Mono, Manrope } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
@@ -105,6 +106,7 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${spaceMono.variable} ${manrope.variable} antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
