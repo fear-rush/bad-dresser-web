@@ -9,7 +9,7 @@ type NavItem = {
 const allNavItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Artist", href: "/artist" },
-  { label: "Catalogue", href: "/catalogue" },
+  { label: "Catalogue", href: "/catalogue/diamond-dogs" },
   { label: "Contact", href: "https://link.baddresser.com/", external: true },
 ];
 
